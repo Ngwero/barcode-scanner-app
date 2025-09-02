@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Reader & Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Barcode Reader & Generator</h1>
+            <p>Scan barcodes with your camera or view sample 5-digit barcodes</p>
+        </header>
+
+        <main>
+            <!-- Barcode Scanner Section -->
+            <section class="scanner-section">
+                <h2>📷 Barcode Scanner</h2>
+                <div class="scanner-container">
+                    <div id="scanner"></div>
+                    <div class="scanner-controls">
+                        <button id="startScanner" class="btn btn-primary">Start Scanner</button>
+                        <button id="stopScanner" class="btn btn-secondary" disabled>Stop Scanner</button>
+                    </div>
+                </div>
+                <div id="scanResult" class="result-display"></div>
+            </section>
+
+            <!-- Sample Barcodes Section -->
+            <section class="barcodes-section">
+                <h2>📊 Sample 5-Digit Barcodes</h2>
+                <div class="barcodes-grid" id="barcodesGrid">
+                    <!-- Sample barcodes will be generated here -->
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with QuaggaJS for scanning and JsBarcode for generation</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
