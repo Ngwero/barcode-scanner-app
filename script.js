@@ -99,12 +99,68 @@ class BarcodeApp {
 
     displayScanResult(code) {
         const resultDisplay = document.getElementById('scanResult');
-        resultDisplay.innerHTML = `
-            <h3>✅ Barcode Detected!</h3>
-            <p>Code: <strong>${code}</strong></p>
-            <p>Length: ${code.length} digits</p>
-        `;
+        const isValid = this.validateBarcode(code);
+        
+        if (isValid) {
+            resultDisplay.innerHTML = `
+                <h3>✅ SUCCESS - Valid Barcode!</h3>
+                <p>Code: <strong>${code}</strong></p>
+                <p>Status: <span style="color: #22c55e; font-weight: bold;">GENUINE</span></p>
+                <p>Length: ${code.length} digits</p>
+                <p>Validation: Passed all checks</p>
+            `;
+            resultDisplay.className = 'result-display show success';
+        } else {
+            resultDisplay.innerHTML = `
+                <h3>❌ INVALID - Code Not Recognized</h3>
+                <p>Code: <strong>${code}</strong></p>
+                <p>Status: <span style="color: #ef4444; font-weight: bold;">INVALID</span></p>
+                <p>Length: ${code.length} digits</p>
+                <p>Validation: Failed - Not in database</p>
+            `;
+            resultDisplay.className = 'result-display show error';
+        }
         resultDisplay.classList.add('show');
+    }
+
+    validateBarcode(code) {
+        // Database of genuine/valid barcodes
+        const validBarcodes = new Set([
+            // Sample 5-digit codes that are considered genuine
+            '12345', '67890', '11111', '22222', '33333', '44444', '55555',
+            '66666', '77777', '88888', '99999', '00000', '13579', '24680',
+            '98765', '54321', '11223', '33445', '55667', '77889', '99001',
+            // Add more valid codes as needed
+            '1234567890123', // EAN-13 example
+            '123456789012',  // UPC-A example
+            '12345678901',   // UPC-E example
+            '1234567890'     // EAN-8 example
+        ]);
+        
+        // Check if code exists in valid database
+        if (validBarcodes.has(code)) {
+            return true;
+        }
+        
+        // Additional validation rules
+        // Check for minimum length (at least 3 digits)
+        if (code.length < 3) {
+            return false;
+        }
+        
+        // Check if it's all numeric (for most barcode types)
+        if (!/^\d+$/.test(code)) {
+            return false;
+        }
+        
+        // For demonstration, consider codes starting with '1' as valid
+        // You can modify this logic based on your specific requirements
+        if (code.startsWith('1') && code.length >= 5) {
+            return true;
+        }
+        
+        // Default to invalid if not in database and doesn't meet criteria
+        return false;
     }
 
     showError(message) {
@@ -127,15 +183,19 @@ class BarcodeApp {
     }
 
     generateSampleCodes() {
-        // Generate 10 unique 5-digit codes
-        const codes = new Set();
+        // Use a mix of genuine and test codes for demonstration
+        const genuineCodes = ['12345', '67890', '11111', '22222', '33333'];
+        const testCodes = [];
         
-        while (codes.size < 10) {
+        // Generate 5 additional test codes
+        while (testCodes.length < 5) {
             const code = Math.floor(10000 + Math.random() * 90000).toString();
-            codes.add(code);
+            if (!genuineCodes.includes(code) && !testCodes.includes(code)) {
+                testCodes.push(code);
+            }
         }
         
-        return Array.from(codes);
+        return [...genuineCodes, ...testCodes];
     }
 
     createBarcodeItem(code, index) {

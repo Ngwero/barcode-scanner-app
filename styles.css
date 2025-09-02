@@ -132,11 +132,10 @@ main {
 .result-display {
     margin-top: 20px;
     padding: 20px;
-    background: #f0fff4;
-    border: 2px solid #68d391;
     border-radius: 10px;
     text-align: center;
     display: none;
+    border: 2px solid;
 }
 
 .result-display.show {
@@ -144,15 +143,40 @@ main {
     animation: slideIn 0.5s ease;
 }
 
+.result-display.success {
+    background: #f0fff4;
+    border-color: #68d391;
+}
+
+.result-display.error {
+    background: #fef2f2;
+    border-color: #f87171;
+}
+
 .result-display h3 {
-    color: #22543d;
     margin-bottom: 10px;
 }
 
+.result-display.success h3 {
+    color: #22543d;
+}
+
+.result-display.error h3 {
+    color: #991b1b;
+}
+
 .result-display p {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+.result-display.success p {
     color: #2f855a;
+}
+
+.result-display.error p {
+    color: #dc2626;
 }
 
 /* Barcodes section */
